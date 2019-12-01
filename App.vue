@@ -29,25 +29,19 @@ const getRotations = (num = 20) => Array(num).fill().map(() => [random(), random
 export default {
   name: 'SphereVue',
   data: () => ({
-    renderer: Object.create(null),
     fps: 0,
     count: 20,
     rotations: getRotations(),
   }),
-  created() {
-    const handleAnimation = () => {
-      const { element } = this.$refs
-      this.renderer = new WebGlHelper({
-        container: element,
-        onFPSUpdate: fps => this.fps = fps,
-      });
+  mounted() {
+    const { element } = this.$refs
+    this.renderer = new WebGlHelper({
+      container: element,
+      onFPSUpdate: fps => this.fps = fps,
+    });
 
-      this.renderer.animate();
-      this.renderer.syncBoxes(this.rotations);
-    };
-
-
-    this.$nextTick(handleAnimation);
+    this.renderer.animate();
+    this.renderer.syncBoxes(this.rotations);
   },
   methods: {
     updateCount(event) {
